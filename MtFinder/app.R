@@ -13,11 +13,13 @@ library(ape)
 library(dplyr)
 library(tidyr)
 
+#reading in fasta files - not used for now
 mtDNA <- read.fasta(file = "~/Downloads/MT_annotate_viz/mt_refsequence.fasta", as.string = TRUE, seqtype = "DNA")
 mtDNA01 = read.GenBank("NC_012920", seq.names = "NC_012920", species.names = TRUE,
                      as.character = FALSE, chunk.size = 400, quiet = TRUE,
                      type = "DNA")
 
+#list of mitochondrial genes with start and end positions
 mito_genes = read.table("~/Downloads/MT_annotate_viz/MtFinderMito_genes.csv", sep = "\t", header = T, stringsAsFactors = F, fill = T)
 mito_genes$Positions.in.the.mitogenome = gsub(",", "", mito_genes$Positions.in.the.mitogenome)
 
@@ -27,6 +29,7 @@ mito_genes$Start = as.numeric(mito_genes$Start)
 mito_genes$End = as.numeric(mito_genes$End)
 
 
+#defining the UI
 ui <- fluidPage(
   titlePanel("Mitochondrial Genome Base Locator"),
   sidebarLayout(
