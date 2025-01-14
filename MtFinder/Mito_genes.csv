@@ -1,0 +1,40 @@
+AminoAcid	Complex number	Category 	Genes 	Positions in the mitogenome 	Strand 	Notes
+NA	V 	ATP synthase 	MT-ATP6 	8,527–9,207 	H 	ATPase 6
+NA	V 	ATP synthase 	MT-ATP8 	8,366–8,572 	H 	ATPase 8
+NA	IV 	Cytochrome c oxidase 	MT-CO1 	5,904–7,445 	H 	Cytochrome c oxidase I
+NA	IV 	Cytochrome c oxidase 	MT-CO2 	7,586–8,269 	H 	Cytochrome c oxidase II
+NA	IV 	Cytochrome c oxidase 	MT-CO3 	9,207–9,990 	H 	Cytochrome c oxidase III
+NA	III 	Coenzyme Q - cytochrome c reductase / Cytochrome b 	MT-CYB 	14,747–15,887 	H 	
+NA	I	NADH dehydrogenase 	MT-ND1 	3,307–4,262 	H 	NADH dehydrogenase 1
+NA	I	NADH dehydrogenase 	MT-ND2 	4,470–5,511 	H 	NADH dehydrogenase 2
+NA	I	NADH dehydrogenase 	MT-ND3 	10,059–10,404 	H 	NADH dehydrogenase 3
+NA	I	NADH dehydrogenase 	MT-ND4 	10,760–12,137 	H 	NADH dehydrogenase 4
+NA	I	NADH dehydrogenase 	MT-ND4L 	10,470–10,766 	H 	NADH dehydrogenase 4L (complex I)
+NA	I	NADH dehydrogenase 	MT-ND5 	12,337–14,148 	H 	NADH dehydrogenase 5
+NA	I	NADH dehydrogenase 	MT-ND6 	14,149–14,673 	L 	NADH dehydrogenase 6
+NA	Small (SSU) 	12S 	MT-RNR1 	648–1,601 	H 	
+NA	Large (LSU) 	16S 	MT-RNR2 	1,671–3,229 	H 	
+Alanine 	Ala 	A 	MT-TA 	5,587–5,655 	L 	
+Cysteine 	Cys 	C 	MT-TC 	5,761–5,826 	L 	
+Aspartic acid 	Asp 	D 	MT-TD 	7,518–7,585 	H 	
+Glutamic acid 	Glu 	E 	MT-TE 	14,674–14,742 	L 	
+Phenylalanine 	Phe 	F 	MT-TF 	577–647 	H 	
+Glycine 	Gly 	G 	MT-TG 	9,991–10,058 	H 	
+Histidine 	His 	H 	MT-TH 	12,138–12,206 	H 	
+Isoleucine 	Ile 	I 	MT-TI 	4,263–4,331 	H 	
+Lysine 	Lys 	K 	MT-TK 	8,295–8,364 	H 	
+Leucine 	Leu (UUR) 	L 	MT-TL1 	3,230–3,304 	H 	
+Leucine 	Leu (CUN) 	L 	MT-TL2 	12,266–12,336 	H 	
+Methionine 	Met 	M 	MT-TM 	4,402–4,469 	H 	
+Asparagine 	Asn 	N 	MT-TN 	5,657–5,729 	L 	
+Proline 	Pro 	P 	MT-TP 	15,956–16,023 	L 	
+Glutamine 	Gln 	Q 	MT-TQ 	4,329–4,400 	L 	
+Arginine 	Arg 	R 	MT-TR 	10,405–10,469 	H 	
+Serine 	Ser (UCN) 	S 	MT-TS1 	7,446–7,514 	L 	
+Serine 	Ser (AGY) 	S 	MT-TS2 	12,207–12,265 	H 	
+Threonine 	Thr 	T 	MT-TT 	15,888–15,953 	H 	
+Valine 	Val 	V 	MT-TV 	1,602–1,670 	H 	
+Tryptophan 	Trp 	W 	MT-TW 	5,512–5,579 	H 	
+Tyrosine 	Tyr 	Y 	MT-TY 	5,826–5,891 	L 	
+NA	NA	Control Region	D-Loop (Start)	1–576	Both	
+NA	NA	Control Region	D-Loop (End)	16024–16569	Both	
