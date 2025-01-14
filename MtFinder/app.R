@@ -12,12 +12,15 @@ library(seqinr)
 library(ape)
 library(dplyr)
 library(tidyr)
+library(rentrez)
 
 #reading in fasta files - not used for now
-mtDNA <- read.fasta(file = "~/Downloads/MT_annotate_viz/mt_refsequence.fasta", as.string = TRUE, seqtype = "DNA")
-mtDNA01 = read.GenBank("NC_012920", seq.names = "NC_012920", species.names = TRUE,
-                     as.character = FALSE, chunk.size = 400, quiet = TRUE,
-                     type = "DNA")
+#mtDNA <- read.fasta(file = "~/Downloads/MT_annotate_viz/mt_refsequence.fasta", as.string = TRUE, seqtype = "DNA")
+mtDNA01 = entrez_fetch(db = "nucleotide", id = "NC_012920", rettype = "fasta")
+
+mtDNA_vector <- gsub("\n", "", mtDNA01)
+mtDNA_vector = gsub(">NC_012920.1 Homo sapiens mitochondrion, complete genome", "", mtDNA_vector)
+
 
 #list of mitochondrial genes with start and end positions
 mito_genes = read.table("~/Downloads/MT_annotate_viz/MtFinderMito_genes.csv", sep = "\t", header = T, stringsAsFactors = F, fill = T)
@@ -51,14 +54,16 @@ server <- function(input, output) {
     
     if (length(genes) == 0) {
       # Case when the position is intergenic
-      output$gene_output <- renderText(paste("The base position", base_position, "is intergenic."))
+      output$gene_output <- renderText(paste("The base position", base_position, "is intergenic. The base at that position is ", substring(mtDNA_vector, first = base_position, last = base_position)))
     } else if (length(genes) == 1) {
       # Case when the position lies in a single gene
-      output$gene_output <- renderText(paste("The base position", base_position, "lies in:", genes))
+      output$gene_output <- renderText(paste("The base position", base_position, "lies in:", genes, " .The base at that position is ", 
+                                             substring(mtDNA_vector, first = base_position, last = base_position)))
     } else {
       # Case when the position lies in multiple genes
       gene_list <- paste(genes, collapse = " and ")
-      output$gene_output <- renderText(paste("The base position", base_position, "lies in:", gene_list))
+      output$gene_output <- renderText(paste("The base position", base_position, "lies in:", gene_list, " .The base at that position is ", 
+                                             substring(mtDNA_vector, first = base_position, last = base_position)))
     }
   })
 }
