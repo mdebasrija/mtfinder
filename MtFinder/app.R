@@ -6,7 +6,6 @@
 #
 #    https://shiny.posit.co/
 #
-
 library(shiny)
 library(seqinr)
 library(ape)
@@ -14,25 +13,21 @@ library(dplyr)
 library(tidyr)
 library(rentrez)
 
-#reading in fasta files - not used for now
-#mtDNA <- read.fasta(file = "~/Downloads/MT_annotate_viz/mt_refsequence.fasta", as.string = TRUE, seqtype = "DNA")
-mtDNA01 = entrez_fetch(db = "nucleotide", id = "NC_012920", rettype = "fasta")
-
+# Fetch mitochondrial genome sequence from NCBI GenBank
+mtDNA01 <- entrez_fetch(db = "nucleotide", id = "NC_012920", rettype = "fasta")
 mtDNA_vector <- gsub("\n", "", mtDNA01)
-mtDNA_vector = gsub(">NC_012920.1 Homo sapiens mitochondrion, complete genome", "", mtDNA_vector)
+mtDNA_vector <- gsub(">NC_012920.1 Homo sapiens mitochondrion, complete genome", "", mtDNA_vector)
 
+# Read the mitochondrial genes with start and end positions
+mito_genes <- read.table("~/Downloads/MT_annotate_viz/MtFinder/Mito_genes.csv", 
+                         sep = "\t", header = TRUE, stringsAsFactors = FALSE, fill = TRUE)
+mito_genes$Positions.in.the.mitogenome <- gsub(",", "", mito_genes$Positions.in.the.mitogenome)
+mito_genes <- mito_genes %>% 
+  separate(Positions.in.the.mitogenome, into = c('Start', 'End'), sep = "–")
+mito_genes$Start <- as.numeric(mito_genes$Start)
+mito_genes$End <- as.numeric(mito_genes$End)
 
-#list of mitochondrial genes with start and end positions
-mito_genes = read.table("~/Downloads/MT_annotate_viz/MtFinderMito_genes.csv", sep = "\t", header = T, stringsAsFactors = F, fill = T)
-mito_genes$Positions.in.the.mitogenome = gsub(",", "", mito_genes$Positions.in.the.mitogenome)
-
-mito_genes <- mito_genes %>% separate(Positions.in.the.mitogenome, into = c('Start', 'End'), sep = "–")
-
-mito_genes$Start = as.numeric(mito_genes$Start)
-mito_genes$End = as.numeric(mito_genes$End)
-
-
-#defining the UI
+# Define the UI
 ui <- fluidPage(
   titlePanel("Mitochondrial Genome Base Locator"),
   sidebarLayout(
@@ -41,7 +36,7 @@ ui <- fluidPage(
       actionButton("find_gene", "Find Gene")
     ),
     mainPanel(
-      textOutput("gene_output")
+      uiOutput("gene_output") 
     )
   )
 )
@@ -51,19 +46,27 @@ server <- function(input, output) {
   observeEvent(input$find_gene, {
     base_position <- input$position
     genes <- mito_genes[mito_genes$Start <= base_position & mito_genes$End >= base_position, "Genes"]
+    base <- substring(mtDNA_vector, first = base_position, last = base_position)
     
     if (length(genes) == 0) {
       # Case when the position is intergenic
-      output$gene_output <- renderText(paste("The base position", base_position, "is intergenic. The base at that position is ", substring(mtDNA_vector, first = base_position, last = base_position)))
+      output$gene_output <- renderUI(HTML(paste(
+        "The base position", base_position, "is intergenic.", "<br>",
+        "The base at that position is:", base
+      )))
     } else if (length(genes) == 1) {
       # Case when the position lies in a single gene
-      output$gene_output <- renderText(paste("The base position", base_position, "lies in:", genes, " .The base at that position is ", 
-                                             substring(mtDNA_vector, first = base_position, last = base_position)))
+      output$gene_output <- renderUI(HTML(paste(
+        "The base position", base_position, "lies in:", genes, ".", "<br>",
+        "The base at that position is:", base
+      )))
     } else {
       # Case when the position lies in multiple genes
       gene_list <- paste(genes, collapse = " and ")
-      output$gene_output <- renderText(paste("The base position", base_position, "lies in:", gene_list, " .The base at that position is ", 
-                                             substring(mtDNA_vector, first = base_position, last = base_position)))
+      output$gene_output <- renderUI(HTML(paste(
+        "The base position", base_position, "lies in:", gene_list, ".", "<br>",
+        "The base at that position is:", base
+      )))
     }
   })
 }
